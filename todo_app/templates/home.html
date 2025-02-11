@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+</head>
+<body>
+    <h1>Welcome, {{ request.user.username }}</h1>
+    <a href="{% url 'logout' %}">Logout</a>
+
+    <h2>Your To-Do List</h2>
+    <ul id="todo-list">
+        {% for todo in todos %}
+            <li>{{ todo.title }} - {% if todo.is_completed %}✅{% else %}❌{% endif %}</li>
+        {% empty %}
+            <p>No to-dos yet.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Add New To-Do</h2>
+    <form id="todo-form">
+        <input type="text" id="title" placeholder="Title" required>
+        <textarea id="description" placeholder="Description"></textarea>
+        <button type="submit">Add To-Do</button>
+    </form>
+
+    <script>
+        document.getElementById("todo-form").onsubmit = async function(event) {
+            event.preventDefault();
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+
+            const response = await fetch("/api/todos/create/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, description })
+            });
+
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert("Error adding To-Do");
+            }
+        };
+    </script>
+</body>
+</html>
