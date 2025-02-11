@@ -10,7 +10,7 @@ from .models import Todo
 # Home Page
 @login_required
 def home(request):
-    todos = Todo.objects.filter(user=request.user)  # Fetch only logged-in user's todos
+    todos = Todo.objects.filter(user=request.user)  
     return render(request, "home.html", {"todos": todos})
 
 # User Registration

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import home, register, user_login, user_logout, create_todo, get_todos, update_todo, delete_todo
 
 urlpatterns = [
-    path("", home, name="home"),  # Home page should be at the top
+    path("", home, name="home"),  
     path("register/", register, name="register"),
     path("login/", user_login, name="login"),
     path("logout/", user_logout, name="logout"),
